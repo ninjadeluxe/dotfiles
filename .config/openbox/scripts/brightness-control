@@ -1,0 +1,11 @@
+#!/bin/bash
+
+msgId="991001"
+
+if [ "$1" = "up" ]; then
+    light -A 10
+elif [ "$1" = "down" ]; then
+    light -U 10
+fi
+
+dunstify -u low -r "$msgId" "Brightness $(light -G | cut -d . -f 1)%"

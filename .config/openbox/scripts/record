@@ -1,0 +1,28 @@
+#!/usr/bin/env bash
+
+# File
+time=`date +%Y-%m-%d-%H-%M-%S`
+screen=`xrandr | grep 'current' | head -n1 | cut -d',' -f2 | tr -d '[:blank:],current'`
+dir="`xdg-user-dir VIDEOS`/Screenrecorder"
+file="Capture_${time}.mp4"
+
+if [[ ! -d "$dir" ]]; then
+	mkdir -p "$dir"
+fi
+
+if [[ "$1" == '--noaudio' ]]; then
+
+	ffmpeg -video_size ${screen} -framerate 25 -f x11grab -i :0.0+0,0 ${dir}/${file}
+
+elif [[ "$1" == '--audio' ]]; then
+
+	ffmpeg -video_size ${screen} -framerate 25 -f x11grab -i :0.0+0,0 -f pulse -ac 2 -i default ${dir}/${file}
+
+else
+
+echo "
+Options:
+--screen
+--screenaudio
+"
+fi

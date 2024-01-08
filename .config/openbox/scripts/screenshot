@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+time=`date +%Y-%m-%d-%H-%M-%S`
+geometry=`xrandr | grep 'current' | head -n1 | cut -d',' -f2 | tr -d '[:blank:],current'`
+dir="`xdg-user-dir PICTURES`/Screenshots"
+file="Screenshot_${time}_${geometry}.png"
+
+if [[ ! -d "$dir" ]]; then
+	mkdir -p "$dir"
+fi
+
+maim -u $dir/$file.png -s -b 2 -c 0.35,0.55,0.85,0.25 -l

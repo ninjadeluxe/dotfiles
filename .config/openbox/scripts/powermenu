@@ -1,0 +1,44 @@
+#!/usr/bin/env bash
+
+if [[ "$1" == '--logout' ]]; then
+
+	yad \
+		--title "Logout?" --center --borders=20 \
+		--button="Logout":"openbox --exit" \ \
+		--button="Exit":0
+
+elif [[ "$1" == '--reboot' ]]; then
+
+	yad \
+		--title "Reboot?" --center --borders=20 \
+		--button="Reboot":"systemctl reboot" \ \
+		--button="Exit":0
+
+elif [[ "$1" == '--shutdown' ]]; then
+
+	yad \
+		--title "Shutdown?" --center --borders=20 \
+		--button="Shutdown":"systemctl poweroff" \ \
+		--button="Exit":0
+
+## User selection menu
+elif [[ "$1" == '--menu' ]]; then
+
+yad \
+    --title "Power menu options" --center --borders=20 \
+    --button="Logout":"$HOME/.config/openbox/scripts/powermenu --logout" \
+    --button="Reboot":"$HOME/.config/openbox/scripts/powermenu --reboot" \ \
+    --button="Shutdown":"$HOME/.config/openbox/scripts/powermenu --shutdown" \ \
+    --button="Exit":0
+
+else
+
+echo "
+Options:
+--logout
+--suspend
+--reboot
+--shutdown
+--menu
+"
+fi
